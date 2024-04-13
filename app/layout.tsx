@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { type ThemeProviderProps } from 'next-themes/dist/types'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { Inter } from 'next/font/google'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,10 +24,19 @@ export default function RootLayout({
   // const { setTheme } = useTheme()
   // setTheme('dark')
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>{children}</ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
