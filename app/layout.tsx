@@ -4,6 +4,7 @@ import { type ThemeProviderProps } from 'next-themes/dist/types'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
+import { ToasterProvider } from '@/components/providers/toaster-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ToasterProvider />
             {children}
           </ThemeProvider>
         </body>
