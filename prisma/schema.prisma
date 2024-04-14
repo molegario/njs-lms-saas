@@ -24,13 +24,13 @@ model Course {
   price Float?
   isPublished Boolean @default(false)
 
-  categoryId String @db.ObjectId
+  categoryId String? @db.ObjectId
   category Category? @relation(fields: [categoryId], references: [id])
 
   attachments Attachment[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now())
 
   @@index([categoryId])
 
@@ -51,7 +51,7 @@ model Attachment {
   courses Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now())
 
   @@index(courseId)
 }
