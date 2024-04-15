@@ -1,8 +1,6 @@
 "use client";
 import * as z from "zod";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
@@ -27,15 +25,6 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((edit) => !edit);
-
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: {
-  //     ...initialData,
-  //     imageUrl: initialData?.imageUrl ? initialData.imageUrl : "", //bug is in video, description can't be null
-  //   },
-  // });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
@@ -67,9 +56,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           )}
         </Button>
       </div>
-
       {!isEditing && (
-
         !initialData.imageUrl ? (
         <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
           <ImageIcon 
@@ -86,7 +73,6 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           />
         </div>
       ))}
-
       {isEditing && (
         <div>
           <FileUpload 
@@ -102,11 +88,10 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
 
 export default ImageForm;
 // OLEGARIO PROGRESS TIMESTAMP REF: 2:52:42 https://youtu.be/Big_aFLmekI?t=10362
-// OLEGARIO PROGRESS TIMESTAMP REF: 3:15:12 https://youtu.be/Big_aFLmekI?t=11712
+// imageuploader::completed::OLEGARIO PROGRESS TIMESTAMP REF: 3:16:46 https://youtu.be/Big_aFLmekI?t=11806
