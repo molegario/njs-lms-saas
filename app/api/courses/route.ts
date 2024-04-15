@@ -29,6 +29,6 @@ export async function POST (
 
   } catch(e:any) {
     console.error("[COURSES]", e.message || 'COURSES API DB ACTION FAIL');
-    return new NextResponse("Internal Error", { status: 500 })
+    return new NextResponse(e.message || "Internal Error", { status: 500 })
   }
 }
