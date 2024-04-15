@@ -4,21 +4,10 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { Course } from "@prisma/client";
 import Image from "next/image";
 import { FileUpload } from "@/components/file-upload";
@@ -37,18 +26,15 @@ const formSchema = z.object({
 const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
-
   const toggleEdit = () => setIsEditing((edit) => !edit);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      ...initialData,
-      imageUrl: initialData?.imageUrl ? initialData.imageUrl : "", //bug is in video, description can't be null
-    },
-  });
-
-  const { isSubmitting, isValid } = form.formState;
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     ...initialData,
+  //     imageUrl: initialData?.imageUrl ? initialData.imageUrl : "", //bug is in video, description can't be null
+  //   },
+  // });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -123,3 +109,4 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
 export default ImageForm;
 // OLEGARIO PROGRESS TIMESTAMP REF: 2:52:42 https://youtu.be/Big_aFLmekI?t=10362
+// OLEGARIO PROGRESS TIMESTAMP REF: 3:15:12 https://youtu.be/Big_aFLmekI?t=11712
