@@ -1,5 +1,3 @@
-// "use client";
-
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
@@ -7,7 +5,8 @@ import { LayoutDashboard } from "lucide-react";
 import { redirect } from "next/navigation";
 import TitleForm from "./_components/title-form";
 import DescriptionForm from "./_components/description-form";
-import ImageForm from "./_components/image-Form";
+import ImageForm from "./_components/image-form";
+import CategoryForm from "./_components/category-form";
 
 const Course = async ({
   params,
@@ -28,7 +27,12 @@ const Course = async ({
     }
   });
 
-  // console.log("COURSE", course);
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc"
+    }
+  });
+
   if (!course) {
     return redirect("/");
   }
@@ -64,6 +68,9 @@ const Course = async ({
           <TitleForm initialData={course} courseId={course.id} />
           <DescriptionForm initialData={course} courseId={course.id} />
           <ImageForm initialData={course} courseId={course.id} />
+          <CategoryForm 
+            initialData={course} courseId={course.id} options={categories.map(xx=>({label:xx.name, value:xx.id}))}
+          />
         </div>
       </div>
     </div>

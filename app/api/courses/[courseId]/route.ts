@@ -15,7 +15,7 @@ export async function PATCH (
       return new NextResponse("Unauthorized access", { status: 401 });
     }
 
-    if (!values.title && !values.description && !values.imageUrl) {
+    if (!values.title && !values.description && !values.imageUrl && !values.categoryId) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
 
