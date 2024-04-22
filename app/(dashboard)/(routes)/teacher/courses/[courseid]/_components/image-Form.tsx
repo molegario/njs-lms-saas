@@ -56,30 +56,31 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && (
-        !initialData.imageUrl ? (
-        <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-          <ImageIcon 
-            className="h-10 w-10 text-slate-500"
-          />
-        </div>
-      ) : (
-        <div className="relative aspect-video mt-2">
-          <Image 
-            alt="Upload"
-            fill
-            className="object-cover rounded-md"
-            src={initialData.imageUrl}
-          />
-        </div>
-      ))}
+      {!isEditing &&
+        (!initialData.imageUrl ? (
+          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
+            <ImageIcon className="h-10 w-10 text-slate-500" />
+          </div>
+        ) : (
+          <div className="relative aspect-video mt-2">
+            <Image
+              alt="Upload"
+              fill
+              className="object-cover rounded-md"
+              src={initialData.imageUrl}
+              sizes="(max-width: 768px) 100vw"
+              placeholder="blur"
+              blurDataURL="background"
+            />
+          </div>
+        ))}
       {isEditing && (
         <div>
-          <FileUpload 
+          <FileUpload
             endpoint="courseImage"
-            onChange={(url)=>{
-              if(url) {
-                onSubmit({ imageUrl:url })
+            onChange={(url) => {
+              if (url) {
+                onSubmit({ imageUrl: url });
               }
             }}
           />

@@ -19,6 +19,9 @@ import { cn } from "@/lib/utils";
 import { Course } from "@prisma/client";
 import { Combobox } from "@/components/ui/combobox";
 
+/**
+ * Props for the CategoryForm component.
+ */
 interface CategoryFormProps {
   initialData: Course;
   courseId: string;
@@ -29,6 +32,23 @@ const formSchema = z.object({
   categoryId: z.string().min(1),
 });
 
+/**
+ * Represents a form component for managing the category of a course.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Object} props.initialData - The initial data for the form.
+ * @param {string} props.courseId - The ID of the course.
+ * @param {Array} props.options - The available options for the category.
+ * @returns {JSX.Element} The rendered component.
+ */
+/**
+ * Renders a form for managing the category of a course.
+ *
+ * @param initialData - The initial data for the form.
+ * @param courseId - The ID of the course.
+ * @param options - The available options for the category.
+ */
 const CategoryForm = ({ initialData, courseId, options }: CategoryFormProps) => {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
@@ -44,6 +64,11 @@ const CategoryForm = ({ initialData, courseId, options }: CategoryFormProps) => 
 
   const { isSubmitting, isValid } = form.formState;
 
+  /**
+   * Handles the form submission.
+   *
+   * @param values - The form values.
+   */
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
@@ -93,9 +118,10 @@ const CategoryForm = ({ initialData, courseId, options }: CategoryFormProps) => 
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox 
+                    <Combobox
                       options={options}
-                      {...field}
+                      value={field.value} // don't spill field into combobox {..field}
+                      onChange={field.onChange} // don't spill field into combobox {..field}
                     />
                   </FormControl>
                   <FormMessage />

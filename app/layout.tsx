@@ -25,8 +25,8 @@ export default function RootLayout({
   // const { setTheme } = useTheme()
   // setTheme('dark')
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <ClerkProvider>
         <body className={inter.className}>
           <ThemeProvider
             attribute="class"
@@ -38,7 +38,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </body>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }
