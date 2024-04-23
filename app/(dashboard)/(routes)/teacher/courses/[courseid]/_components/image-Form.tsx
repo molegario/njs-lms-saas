@@ -32,7 +32,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       toggleEdit();
       router.refresh(); //refresh view
     } catch (e: any) {
-      toast.error(e.message ?? "failed to update description form");
+      toast.error(e.message ?? "failed to update image form");
     }
   };
 
