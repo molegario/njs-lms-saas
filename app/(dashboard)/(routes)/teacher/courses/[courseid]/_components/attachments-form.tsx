@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { File, Loader2, PlusCircle, X } from "lucide-react";
 import { useState } from "react";
 import { Attachment, Course } from "@prisma/client";
-import Image from "next/image";
 import { FileUpload } from "@/components/file-upload";
 
 interface AttachmentsFormProps {
@@ -21,6 +20,12 @@ const formSchema = z.object({
   }),
 });
 
+/**
+ * Renders a form for managing attachments for a course.
+ * @param initialData - The initial data for the form.
+ * @param courseId - The ID of the course.
+ * @returns The AttachmentsForm component.
+ */
 const AttachmentsForm = ({ initialData, courseId }: AttachmentsFormProps) => {
   const router = useRouter();
   const [deleteId, setDeletingId] = useState<string | null>(null);
