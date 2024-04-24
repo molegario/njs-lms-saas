@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-export async function PUT(
+export async function DELETE(
   req: Request,
   { params }: { params: { courseId: string } }
 ) {
@@ -38,8 +38,10 @@ export async function PUT(
       });
     }
 
-    return new NextResponse("Success reording chapters", {status: 200, statusText: "OK"});
-
+    return new NextResponse("Success reording chapters", {
+      status: 200,
+      statusText: "OK",
+    });
   } catch (e: any) {
     console.error(
       "COURSES/[COURSEID]/CHAPTERS/REORDER",

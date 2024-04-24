@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Chapter, Course } from "@prisma/client";
@@ -63,6 +63,11 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
   const onEdit = async (id: string) => {
     console.log("EDIT::", id);
+
+
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
+
+
   };
 
   const onReorder = async (updateData: { id: string; position: number }[]) => {
@@ -82,7 +87,14 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   };
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className=" relative mt-6 border bg-slate-100 rounded-md p-4">
+      {
+        isUpdating && (
+          <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+            <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
+          </div>
+        )
+      }
       <div className="font-medium flex items-center justify-between">
         Course chapters
         <Button onClick={toggleCreating} variant="ghost">
