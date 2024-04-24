@@ -31,7 +31,7 @@ export async function PATCH (
 
     return NextResponse.json(coursepatch);
   } catch(e:any) {
-    console.error("[COURSES/[COURSEID]]", e.message || "COURSES/[COURSEID] API DB ACTION FAIL");
+    console.error("COURSES/[COURSEID]", e.message || "COURSES/[COURSEID] API DB ACTION FAIL");
     return new NextResponse(e.message ?? "Internal server error", { status: 500 });
   }
 }

@@ -7,6 +7,10 @@
 // COURSE REF:: 1:59:38/10:41:03 https://www.youtube.com/watch?v=Big_aFLmekI
 // COURSE REF-URL:: https://youtu.be/Big_aFLmekI?t=7178
 
+// npx prisma generate
+// npx prisma db push
+
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,17 +28,15 @@ model Course {
   imageUrl String?
   price Float?
   isPublished Boolean @default(false)
-
   categoryId String? @db.ObjectId
-  category Category? @relation(fields: [categoryId], references: [id])
-
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  chapters Chapter[]
   attachments Attachment[]
-
+  puchases Purchase[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-
 }
 
 model Category {
@@ -47,13 +49,67 @@ model Attachment {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   url String
-  
   courseId String @db.ObjectId
-  courses Course @relation(fields: [courseId], references: [id])
-
+  courses Course @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index(courseId)
 }
 
+model Chapter {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String?
+  videoUrl String?
+  position Int
+  isPublished Boolean @default(false)
+  isFree Boolean @default(false)
+  muxData MuxData?
+  courseId String @db.ObjectId
+  course Course @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userProgress UserProgress[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  assetId String
+  playbackId String
+  chapterId String @unique @db.ObjectId
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model UserProgress {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  chapterId String @db.ObjectId
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  isCompleted Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+model Purchase {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  courseId String @db.ObjectId
+  course Course @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([courseId])
+  @@unique([userId, courseId])
+}
+
+model StripeCustomer {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique
+  stripeCustomerId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

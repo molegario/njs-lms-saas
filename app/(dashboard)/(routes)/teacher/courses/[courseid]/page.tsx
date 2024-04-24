@@ -9,6 +9,7 @@ import ImageForm from "./_components/image-form";
 import CategoryForm from "./_components/category-form";
 import PriceForm from "./_components/price-form";
 import AttachmentsForm from "./_components/attachments-form";
+import ChaptersForm from "./_components/chapters-form";
 
 const Course = async ({
   params,
@@ -26,13 +27,20 @@ const Course = async ({
   const course = await db.course.findUnique({
     where: {
       id: params.courseid,
+      userId: userId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
         },
       },
+
     }
   });
 
@@ -52,6 +60,7 @@ const Course = async ({
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some(chapter => chapter.isPublished),
   ];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
@@ -89,7 +98,9 @@ const Course = async ({
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
-            <div>TODO:: Chapters</div>
+
+            <ChaptersForm initialData={course} courseId={course.id} />
+
           </div>
 
           <div>

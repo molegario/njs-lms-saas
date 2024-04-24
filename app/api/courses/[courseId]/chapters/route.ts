@@ -8,8 +8,8 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const { url } = await req.json();
-    
+    const { title }:{title:string} = await req.json();
+
     if (!userId) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
@@ -21,26 +21,38 @@ export async function POST(
       },
     });
 
-    if(!courseOwner) {
+    if (!courseOwner) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
 
-    const attachment = await db.attachment.create({
-      data: {
-        url: url,
-        name: url.split("/").pop(),
+    const lastChapter = await db.chapter.findFirst({
+      where: {
         courseId: params.courseId,
+      },
+      orderBy: {
+        id: "desc",
       },
     });
 
-    return NextResponse.json(attachment);
+    const newPosition = lastChapter?.position ? lastChapter.position + 1 : 1;
 
+    const chapter = await db.chapter.create({
+      data: {
+        title,
+        courseId: params.courseId,
+        position: newPosition,
+      },
+    });
+
+    return NextResponse.json(chapter);
   } catch (e: any) {
     console.error(
-      "COURSES/[COURSEID]/ATTACHMENTS]",
-      e.message || "COURSES/[COURSEID]/ATTACHMENTS API DB ACTION FAIL"
+      "COURSES/[COURSEID]/CHAPTERS",
+      e.message || "COURSES/[COURSEID]/CHAPTERS API DB ACTION FAIL"
     );
 
-    return new NextResponse(e.message ?? "Internal server error", { status: 500 });
+    return new NextResponse(e.message ?? "Internal server error", {
+      status: 500,
+    });
   }
 }
