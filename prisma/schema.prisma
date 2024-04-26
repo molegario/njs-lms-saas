@@ -13,6 +13,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -32,11 +33,12 @@ model Course {
   category Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   chapters Chapter[]
   attachments Attachment[]
-  puchases Purchase[]
+  purchases Purchase[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@fulltext([title])
 }
 
 model Category {
@@ -91,8 +93,8 @@ model UserProgress {
   isCompleted Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@index([chapterId])
   @@unique([userId, chapterId])
+  @@index([chapterId])
 }
 
 model Purchase {
@@ -102,8 +104,8 @@ model Purchase {
   course Course @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@index([courseId])
   @@unique([userId, courseId])
+  @@index([courseId])
 }
 
 model StripeCustomer {

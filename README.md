@@ -11,18 +11,30 @@ yarn dev
 # or
 pnpm dev
 ```
-## prisma refresh
-when you update schema don't forget to refresh the prisma generated files:
-```
-npx prisma generate
-npx prisma db push
-```
+## Browse the application
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## prisma refresh
+when you update schema don't forget to refresh the prisma generated files:
+```
+npx prisma generate
+npx prisma db push
+```
+## reset DB (DEV ONLY)
+when you need to start the DB from zero (after a major DB change)
+```
+npx prisma migrate reset
+npx prisma db push
+```
+then you need to regen the category collection:
+```
+node scripts/seed.ts
+```
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
