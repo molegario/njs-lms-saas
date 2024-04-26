@@ -5,6 +5,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ToasterProvider } from '@/components/providers/toaster-provider'
+import { ConfettiProvider } from '@/components/providers/confetti-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,8 +23,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const { setTheme } = useTheme()
-  // setTheme('dark')
   return (
     <html lang="en" suppressHydrationWarning>
       <ClerkProvider>
@@ -34,6 +33,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ConfettiProvider />
             <ToasterProvider />
             {children}
           </ThemeProvider>

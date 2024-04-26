@@ -16,6 +16,7 @@ export async function DELETE(
     const { userId } = auth();
     const { courseId } = params;
 
+    // check user login exists
     if (!userId) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
@@ -35,10 +36,12 @@ export async function DELETE(
       },
     });
 
+    // check user access
     if (!course) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
 
+    // flush chapters and chapter content
     if (course?.chapters?.length > 0) {
       for (const chapter of course.chapters) {
         if (chapter?.muxData?.assetId) {
@@ -58,6 +61,7 @@ export async function DELETE(
       }
     }
 
+    // flush attachments
     if(course?.attachments?.length > 0) {
       for(const attachment of course.attachments) {
         await db.attachment.delete({
@@ -69,6 +73,7 @@ export async function DELETE(
       }
     }
 
+    // delete course
     const deletedcourse = await db.course.delete({
       where: {
         id: courseId,
@@ -76,6 +81,7 @@ export async function DELETE(
       },
     });
 
+    // relay update
     return NextResponse.json(deletedcourse);
   } catch (e: any) {
     console.error(
@@ -108,7 +114,7 @@ export async function PATCH(
       !values.categoryId &&
       !values.price
     ) {
-      return new NextResponse("Unauthorized access", { status: 401 });
+      return new NextResponse("Missing fields to update.", { status: 401 });
     }
 
     const coursepatch = await db.course.update({

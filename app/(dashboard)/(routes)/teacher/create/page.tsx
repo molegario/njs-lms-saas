@@ -39,7 +39,6 @@ const CreateCourse = () => {
   } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
     try {
       const response = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${response.data.id}`);
@@ -47,7 +46,6 @@ const CreateCourse = () => {
     } catch(e:any) {
       toast.error(e.message ?? "failed to create course");
     }
-
   }
 
   return (
@@ -84,7 +82,7 @@ const CreateCourse = () => {
               </FormItem>}
             />
             <div className="flex items-center gap-x-2">
-              <Link href="/">
+              <Link href="/teacher/courses">
                 <Button
                   type="button"
                   variant="ghost"
