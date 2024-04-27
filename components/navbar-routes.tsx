@@ -12,7 +12,8 @@ const NavbarRoutes = () => {
   const pathname = usePathname();
   const isTeacherPage = pathname?.startsWith("/teacher"); //on course creator page
   const isCoursePage =
-    pathname?.includes("/chapter") && pathname?.includes("/teacher"); //on a course chapter
+    // pathname?.includes("/chapter") && pathname?.includes("/teacher"); //on a course chapter
+    pathname?.includes("/courses");
   const isSearchPage = pathname === "/search"; //on search page
 
   return (
@@ -29,7 +30,7 @@ const NavbarRoutes = () => {
           <Link href="/">
             <Button size="sm" variant="ghost">
               <LogOut className="h-4 w-4 mr-2" />
-              Exit teacher mode
+              Exit
             </Button>
           </Link>
         ) : (

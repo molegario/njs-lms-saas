@@ -35,6 +35,13 @@ then you need to regen the category collection:
 ```
 node scripts/seed.ts
 ```
+## Setting up Stripe payment processing
+To set up the Stripe payment in test mode:
+```
+stripe login
+stripe listen --forward-to localhost:3000/api/webhook
+```
+last line forwards the simulated webhooks to the listener.  It will also forward calls from PROD in TEST mode.
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
