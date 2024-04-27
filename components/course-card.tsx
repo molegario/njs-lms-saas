@@ -53,7 +53,11 @@ const CourseCard = ({
           {
             progress !== null ? (
               <div>
-                <CourseProgress value={progress} variant="success" size="sm" />
+                <CourseProgress 
+                  value={progress} 
+                  variant={progress === 100 ? "success" : "default"} 
+                  size="sm" 
+                />
               </div>
             ) : (
               <p className="text-md md:text-sm font-medium text-slate-700">

@@ -1,13 +1,13 @@
 "use client";
 
-// import axios from "axios";
+import axios from "axios";
 import MuxPlayer from "@mux/mux-player-react";
 import { useEffect, useState } from "react";
-// import toast from "react-hot-toast";
-// import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import { useConfettiStore } from "@/hooks/use-confetti-store"
+import { useConfettiStore } from "@/hooks/use-confetti-store"
 
 interface VideoPlayerProps {
   chapterId: string;
@@ -29,6 +29,39 @@ const VideoPlayer = ({
   completeOnEnd,
 }:VideoPlayerProps) => {
   const [ isReady, setIsReady ] = useState(false);
+
+
+  const router = useRouter();
+  const confetti = useConfettiStore();
+
+  const onEnd = async () => {
+    try {
+      if(completeOnEnd) {
+        await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+          isCompleted: true,
+        });
+
+        if(!nextChapterId) {
+          confetti.onOpen();
+        }
+
+        toast.success("User progress logged successfully.");
+        router.refresh();
+
+        if(nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
+
+      }
+
+    } catch {
+      toast.error(
+        "An error occurred. Failed to log user auto completion. Please try setting progress manually."
+      );
+    }
+  };
+
+
   return (
     <div className="relative aspect-video">
       {!isReady && !isLocked && (
@@ -52,7 +85,7 @@ const VideoPlayer = ({
               )
             }
             onCanPlay={() => setIsReady(true)}
-            onEnded={() => {}}
+            onEnded={onEnd}
             // autoPlay
             playbackId={playbackId}
           />
