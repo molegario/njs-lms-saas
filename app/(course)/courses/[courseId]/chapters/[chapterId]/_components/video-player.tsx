@@ -53,7 +53,7 @@ const VideoPlayer = ({
             }
             onCanPlay={() => setIsReady(true)}
             onEnded={() => {}}
-            autoPlay
+            // autoPlay
             playbackId={playbackId}
           />
         )
@@ -63,3 +63,5 @@ const VideoPlayer = ({
 }
  
 export default VideoPlayer;
+
+// OLEGARIO::TIMESTAMP:: 8:54:15 https://youtu.be/Big_aFLmekI?t=32055
