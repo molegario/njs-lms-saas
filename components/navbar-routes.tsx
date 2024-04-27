@@ -2,7 +2,6 @@
 
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-// import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +11,6 @@ const NavbarRoutes = () => {
   const pathname = usePathname();
   const isTeacherPage = pathname?.startsWith("/teacher"); //on course creator page
   const isCoursePage =
-    // pathname?.includes("/chapter") && pathname?.includes("/teacher"); //on a course chapter
     pathname?.includes("/courses");
   const isSearchPage = pathname === "/search"; //on search page
 

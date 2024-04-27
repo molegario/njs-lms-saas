@@ -31,8 +31,6 @@ const CoursesSidebar = async ({ course, progressCount }: CoursesSidebarProps) =>
     }
   });
 
-
-
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
       <div className="mt-5 w-full flex flex-row items-center justify-center">

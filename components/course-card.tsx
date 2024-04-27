@@ -1,11 +1,8 @@
-// import { Category } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { IconBadge } from "./icon-badge";
 import { BookOpen } from "lucide-react";
-// import { format } from "path";
 import { formatPrice } from "@/lib/format";
-import Course from "@/app/(dashboard)/(routes)/teacher/courses/[courseid]/page";
 import CourseProgress from "./course-progress";
 
 interface CourseCardProps {
