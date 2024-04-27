@@ -7,7 +7,7 @@ import DataChart from "./_components/data-chart";
 const Analytics = async () => {
   const { userId } = auth();
   if (!userId) {
-    return redirect("/");
+    return redirect("/sign-in");
   }
 
   const { data, totalRevenue, totalSales } = await getAnalytics(userId);

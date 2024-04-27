@@ -18,7 +18,7 @@ const search = async ({searchParams}:SearchProps) => {
   const { userId } = auth();
 
   if(!userId) {
-    return redirect("/");
+    return redirect("/sign-in");
   }
 
   const categories = await db.category.findMany({

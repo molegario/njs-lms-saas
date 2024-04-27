@@ -17,7 +17,6 @@ interface DataChartProps {
   }[];
 }
 
-
 const DataChart = ({
   data,
 }: DataChartProps) => {
